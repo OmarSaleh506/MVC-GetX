@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'routes/routes.dart';
-import 'view/screens/welcome_screen.dart';
 
 void main() {
   runApp(MyApp());

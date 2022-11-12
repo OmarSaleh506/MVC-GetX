@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "281471409202",
+    "project_id": "mvc-getx",
+    "storage_bucket": "mvc-getx.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:281471409202:android:5fba6982a91de94557302b",
+        "android_client_info": {
+          "package_name": "com.example.mvc_getx"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "281471409202-ijg06b5k286hafo25squ4ekg8donlb14.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBf4izyDwBKWJ4HKHhcTHWq_aVhznVBBjk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "281471409202-ijg06b5k286hafo25squ4ekg8donlb14.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

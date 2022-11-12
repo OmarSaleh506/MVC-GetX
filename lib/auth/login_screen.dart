@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mvc_getx/auth/forgot_pasword_screen.dart';
-
 import '../logic/controllers/bindings/auth_controller.dart';
 import '../routes/routes.dart';
 import '../utils/my_string.dart';
