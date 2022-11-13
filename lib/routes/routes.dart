@@ -27,6 +27,7 @@ class AppRoutes {
     GetPage(
       name: Routes.forgotPasswordScreen,
       page: () => ForgotPasswordScreen(),
+      binding: AuthBinding(),
     ),
   ];
 }

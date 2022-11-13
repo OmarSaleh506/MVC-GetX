@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mvc_getx/logic/controllers/bindings/auth_controller.dart';
@@ -153,10 +154,16 @@ class SignUpScreen extends StatelessWidget {
                         const SizedBox(
                           height: 50,
                         ),
-                        AuthButton(
-                          onPressed: () {},
-                          text: 'SIGN UP',
-                        ),
+                        GetBuilder<AuthController>(builder: (_) {
+                          return AuthButton(
+                            onPressed: () {
+                              if(fromKey.currentState!.validate()){
+                                
+                              }
+                            },
+                            text: 'SIGN UP',
+                          );
+                        })
                       ],
                     ),
                   ),
