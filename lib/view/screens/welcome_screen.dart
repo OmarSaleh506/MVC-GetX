@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../auth/login_screen.dart';
+import 'auth/login_screen.dart';
 import '../../routes/routes.dart';
 import '../../utils/theme/theme.dart';
 import '../widgets/text_utils.dart';

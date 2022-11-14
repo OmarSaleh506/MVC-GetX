@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mvc_getx/logic/controllers/bindings/auth_controller.dart';
+import 'package:mvc_getx/logic/controller/auth_controller.dart';
 import 'package:mvc_getx/utils/theme/theme.dart';
 import 'package:mvc_getx/view/widgets/text_utils.dart';
 

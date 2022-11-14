@@ -1,14 +1,16 @@
 import 'package:get/get.dart';
-
-import '../auth/forgot_pasword_screen.dart';
-import '../auth/login_screen.dart';
-import '../auth/signup_screen.dart';
-import '../logic/controllers/bindings/binding/auth_binding.dart';
+import 'package:mvc_getx/logic/bindings/product_binding.dart';
+import 'package:mvc_getx/view/screens/main_screen.dart';
+import '../view/screens/auth/forgot_pasword_screen.dart';
+import '../view/screens/auth/login_screen.dart';
+import '../view/screens/auth/signup_screen.dart';
+import '../logic/bindings/auth_binding.dart';
+import '../logic/bindings/main_bindings.dart';
 import '../view/screens/welcome_screen.dart';
 
 class AppRoutes {
   static const welcome = Routes.welcomeScreen;
-
+  static const mainScreen = Routes.mainScreen;
   static final routes = [
     GetPage(
       name: Routes.welcomeScreen,
@@ -29,6 +31,11 @@ class AppRoutes {
       page: () => ForgotPasswordScreen(),
       binding: AuthBinding(),
     ),
+    GetPage(name: Routes.mainScreen, page: () => MainScreen(), bindings: [
+      AuthBinding(),
+      MainBinding(),
+      ProductBinding(),
+    ]),
   ];
 }
 
@@ -37,4 +44,5 @@ class Routes {
   static const loginScreen = '/loginScreen';
   static const signUpScreen = '/signUpScreen';
   static const forgotPasswordScreen = '/forgotPasswordScreen';
+  static const mainScreen = '/mainScreen';
 }

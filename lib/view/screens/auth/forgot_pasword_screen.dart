@@ -3,20 +3,22 @@ import 'package:get/get.dart';
 import 'package:mvc_getx/utils/theme/theme.dart';
 import 'package:mvc_getx/view/widgets/auth/auth_button.dart';
 
-import '../utils/my_string.dart';
-import '../view/widgets/auth/auth_text_from_field.dart';
+import '../../../logic/controller/auth_controller.dart';
+import '../../../utils/my_string.dart';
+import '../../widgets/auth/auth_text_from_field.dart';
 
 class ForgotPasswordScreen extends StatelessWidget {
   ForgotPasswordScreen({Key? key}) : super(key: key);
-  final TextEditingController emailController = TextEditingController();
   final fromKey = GlobalKey<FormState>();
-
+  final TextEditingController emailController = TextEditingController();
+  final controller = Get.find<AuthController>();
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        backgroundColor: context.theme.backgroundColor,
         appBar: AppBar(
-          backgroundColor: Get.isDarkMode ? Colors.white : darkGreyClr,
+          backgroundColor: Get.isDarkMode ? darkGreyClr : Colors.white,
           centerTitle: true,
           elevation: 0,
           title: Text(
@@ -31,11 +33,10 @@ class ForgotPasswordScreen extends StatelessWidget {
             },
             icon: Icon(
               Icons.arrow_back,
-              color: Get.isDarkMode ? Colors.black : Colors.white,
+              color: Get.isDarkMode ? Colors.white : Colors.black,
             ),
           ),
         ),
-        backgroundColor: Get.isDarkMode ? Colors.white : darkGreyClr,
         body: Form(
           key: fromKey,
           child: SingleChildScrollView(
@@ -64,7 +65,7 @@ class ForgotPasswordScreen extends StatelessWidget {
                     'If you want to recover your account, then please provide email ID below..',
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      color: Get.isDarkMode ? Colors.black : Colors.white,
+                      color: Get.isDarkMode ? Colors.white : Colors.black,
                     ),
                   ),
                   const SizedBox(
@@ -100,7 +101,16 @@ class ForgotPasswordScreen extends StatelessWidget {
                   const SizedBox(
                     height: 50,
                   ),
-                  AuthButton(text: 'SEND', onPressed: () {})
+                  GetBuilder<AuthController>(builder: (_) {
+                    return AuthButton(
+                        text: 'SEND',
+                        onPressed: () {
+                          if (fromKey.currentState!.validate()) {
+                            String email = emailController.text.trim();
+                            controller.resetPassword(email);
+                          }
+                        });
+                  })
                 ],
               ),
             ),

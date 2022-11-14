@@ -1,29 +1,33 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../logic/controllers/bindings/auth_controller.dart';
-import '../routes/routes.dart';
-import '../utils/my_string.dart';
-import '../utils/theme/theme.dart';
-import '../view/widgets/auth/auth_button.dart';
-import '../view/widgets/auth/auth_text_from_field.dart';
-import '../view/widgets/auth/container_under.dart';
-import '../view/widgets/text_utils.dart';
+import 'package:mvc_getx/logic/controller/auth_controller.dart';
+import 'package:mvc_getx/routes/routes.dart';
+import 'package:mvc_getx/utils/my_string.dart';
+import 'package:mvc_getx/utils/theme/theme.dart';
+import 'package:mvc_getx/view/widgets/text_utils.dart';
 
-class LoginScreen extends StatelessWidget {
-  LoginScreen({Key? key}) : super(key: key);
+import '../../widgets/auth/auth_button.dart';
+import '../../widgets/auth/auth_text_from_field.dart';
+import '../../widgets/auth/check_widget.dart';
+import '../../widgets/auth/container_under.dart';
+
+class SignUpScreen extends StatelessWidget {
+  SignUpScreen({Key? key}) : super(key: key);
   final fromKey = GlobalKey<FormState>();
-  final controller = Get.find<AuthController>();
+  final TextEditingController nameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  final controller = Get.find<AuthController>();
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        backgroundColor: context.theme.backgroundColor,
         appBar: AppBar(
-          backgroundColor: Get.isDarkMode ? Colors.white : darkGreyClr,
+          backgroundColor: Get.isDarkMode ? darkGreyClr : Colors.white,
           elevation: 0,
         ),
-        backgroundColor: Get.isDarkMode ? Colors.white : darkGreyClr,
         body: SingleChildScrollView(
           child: Column(
             children: [
@@ -31,7 +35,7 @@ class LoginScreen extends StatelessWidget {
                 width: double.infinity,
                 height: MediaQuery.of(context).size.height / 1.3,
                 child: Padding(
-                  padding: const EdgeInsets.only(left: 25, right: 25, top: 40),
+                  padding: EdgeInsets.only(left: 25, right: 25, top: 40),
                   child: Form(
                     key: fromKey,
                     child: Column(
@@ -39,7 +43,7 @@ class LoginScreen extends StatelessWidget {
                         Row(
                           children: [
                             TextUtils(
-                              text: 'LOG',
+                              text: 'SIGN',
                               fontSize: 28,
                               fontWeight: FontWeight.w500,
                               color: Get.isDarkMode ? mainColor : pinkClr,
@@ -49,17 +53,38 @@ class LoginScreen extends StatelessWidget {
                               width: 3,
                             ),
                             TextUtils(
-                              text: 'IN',
+                              text: 'UP',
                               fontSize: 28,
                               fontWeight: FontWeight.w500,
                               color:
-                                  Get.isDarkMode ? Colors.black : Colors.white,
+                                  Get.isDarkMode ? Colors.white : Colors.black,
                               underLine: TextDecoration.none,
                             ),
                           ],
                         ),
                         const SizedBox(
                           height: 50,
+                        ),
+                        AuthTextFromField(
+                          controller: nameController,
+                          obscureText: false,
+                          validator: (value) {
+                            if (value.toString().length <= 2 ||
+                                !RegExp(validationName).hasMatch(value)) {
+                              return 'Enter valid name';
+                            } else {
+                              return null;
+                            }
+                          },
+                          prefixIcon: Get.isDarkMode
+                              ? Image.asset('assets/images/user.png')
+                              : Icon(
+                                  Icons.person,
+                                  color: pinkClr,
+                                  size: 30,
+                                ),
+                          suffixIcon: Text(''),
+                          hintText: 'UserName',
                         ),
                         const SizedBox(
                           height: 20,
@@ -122,73 +147,51 @@ class LoginScreen extends StatelessWidget {
                             hintText: 'Password',
                           );
                         }),
-                        Align(
-                          alignment: Alignment.centerRight,
-                          child: TextButton(
-                              onPressed: () {
-                                Get.toNamed(Routes.forgotPasswordScreen);
-                              },
-                              child: TextUtils(
-                                text: 'ForgotPassword?',
-                                color: Get.isDarkMode
-                                    ? Colors.black
-                                    : Colors.white,
-                                fontSize: 14,
-                                underLine: TextDecoration.none,
-                                fontWeight: FontWeight.normal,
-                              )),
-                        ),
                         const SizedBox(
                           height: 50,
                         ),
+                        CheckWidget(),
                         const SizedBox(
                           height: 50,
                         ),
-                        AuthButton(
-                          onPressed: () {},
-                          text: 'LOG IN',
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        TextUtils(
-                          text: 'OR',
-                          fontSize: 18,
-                          fontWeight: FontWeight.w500,
-                          color: Get.isDarkMode ? Colors.black : Colors.white,
-                          underLine: TextDecoration.none,
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            InkWell(
-                                onTap: () {},
-                                child:
-                                    Image.asset('assets/images/facebook.png')),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            InkWell(
-                              onTap: () {},
-                              child: Image.asset('assets/images/google.png'),
-                            )
-                          ],
-                        )
+                        GetBuilder<AuthController>(builder: (_) {
+                          return AuthButton(
+                            onPressed: () {
+                              if (controller.isCheckBox == false) {
+                                Get.snackbar(
+                                  'Check Box',
+                                  'please, Accept terms & conditions',
+                                  snackPosition: SnackPosition.BOTTOM,
+                                  backgroundColor: Colors.green,
+                                  colorText: Colors.white,
+                                );
+                              } else if (fromKey.currentState!.validate()) {
+                                String name = nameController.text.trim();
+                                String email = emailController.text.trim();
+                                String password = passwordController.text;
+                                controller.signUpUsingFirebase(
+                                  name: name,
+                                  email: email,
+                                  password: password,
+                                );
+                                controller.isCheckBox = true;
+                              }
+                            },
+                            text: 'SIGN UP',
+                          );
+                        })
                       ],
                     ),
                   ),
                 ),
               ),
               ContainerUnder(
-                text: 'Don`t have an Account? ',
-                textType: 'Sign up',
+                text: 'Already have an Account? ',
+                textType: 'Log in',
                 onPressed: () {
-                  Get.offNamed(Routes.signUpScreen);
+                  Get.offNamed(Routes.loginScreen);
                 },
-              ),
+              )
             ],
           ),
         ),
