@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mvc_getx/logic/controller/cart_controller.dart';
 import 'package:mvc_getx/logic/controller/product_controller.dart';
 import 'package:mvc_getx/model/product_modle.dart';
 import 'package:mvc_getx/utils/theme/theme.dart';
@@ -8,6 +9,7 @@ import 'package:mvc_getx/view/widgets/text_utils.dart';
 class CardItems extends StatelessWidget {
   CardItems({super.key});
   final controller = Get.find<ProductController>();
+  final cartController = Get.find<CartController>();
   @override
   Widget build(BuildContext context) {
     return Obx(() {
@@ -33,6 +35,7 @@ class CardItems extends StatelessWidget {
                 price: controller.productList[index].price,
                 rate: controller.productList[index].rating.rate,
                 productId: controller.productList[index].id,
+                productModels: controller.productList[index],
               );
             }),
           ),
@@ -46,6 +49,7 @@ class CardItems extends StatelessWidget {
     required double price,
     required double rate,
     required int productId,
+    required ProductModels productModels,
   }) {
     return Padding(
       padding: const EdgeInsets.all(5),
@@ -82,8 +86,10 @@ class CardItems extends StatelessWidget {
                           ),
                   ),
                   IconButton(
-                    onPressed: () {},
-                    icon: const Icon(Icons.add),
+                    onPressed: () {
+                      cartController.addProductToCart(productModels);
+                    },
+                    icon: const Icon(Icons.shopping_cart),
                   ),
                 ],
               );
@@ -101,7 +107,11 @@ class CardItems extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 15, right: 15, top: 10),
+              padding: const EdgeInsets.only(
+                left: 15,
+                right: 15,
+                top: 10,
+              ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [

@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 import 'package:mvc_getx/logic/bindings/product_binding.dart';
+import 'package:mvc_getx/logic/controller/product_controller.dart';
+import 'package:mvc_getx/view/screens/cart_screen.dart';
 import 'package:mvc_getx/view/screens/main_screen.dart';
 import '../view/screens/auth/forgot_pasword_screen.dart';
 import '../view/screens/auth/login_screen.dart';
@@ -31,9 +33,17 @@ class AppRoutes {
       page: () => ForgotPasswordScreen(),
       binding: AuthBinding(),
     ),
-    GetPage(name: Routes.mainScreen, page: () => MainScreen(), bindings: [
+    GetPage(
+      name: Routes.mainScreen,
+      page: () => MainScreen(),
+      bindings: [
+        AuthBinding(),
+        MainBinding(),
+        ProductBinding(),
+      ],
+    ),
+    GetPage(name: Routes.cardScreen, page: () => CardScreen(), bindings: [
       AuthBinding(),
-      MainBinding(),
       ProductBinding(),
     ]),
   ];
@@ -45,4 +55,5 @@ class Routes {
   static const signUpScreen = '/signUpScreen';
   static const forgotPasswordScreen = '/forgotPasswordScreen';
   static const mainScreen = '/mainScreen';
+  static const cardScreen = '/cardScreen';
 }
