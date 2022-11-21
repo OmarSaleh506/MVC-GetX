@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:mvc_getx/logic/controller/tehem_controller.dart';
+import 'package:mvc_getx/utils/my_string.dart';
 import 'package:mvc_getx/utils/theme/theme.dart';
+import 'language/localization.dart';
 import 'routes/routes.dart';
 
 void main() async {
@@ -22,6 +24,9 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       title: "MVC-GetX",
       debugShowCheckedModeBanner: false,
+      locale: Locale(GetStorage().read<String>('lang').toString()),
+      fallbackLocale: Locale(ene),
+      translations: LocalizationApp(),
       theme: ThemesApp.light,
       darkTheme: ThemesApp.dark,
       themeMode: ThemeController().themeDataGet,
