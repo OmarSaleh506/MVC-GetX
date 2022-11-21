@@ -9,7 +9,7 @@ class CartProductCard extends StatelessWidget {
   final ProductModels productModels;
   final int index;
   final int quantity;
-  final controller = Get.find<CartController>();
+    final controller = Get.find<CartController>();
 
   CartProductCard({
     super.key,

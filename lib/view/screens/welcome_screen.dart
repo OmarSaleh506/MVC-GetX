@@ -124,7 +124,7 @@ class WelcomeScreen extends StatelessWidget {
                           Get.offNamed(Routes.signUpScreen);
                         },
                         child: TextUtils(
-                          underLine: TextDecoration.underline,
+                          underLine: TextDecoration.underline,  
                           text: 'Signup',
                           color: Colors.white,
                           fontSize: 18,

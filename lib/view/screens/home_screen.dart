@@ -7,8 +7,8 @@ import '../widgets/home/card_items.dart';
 import '../widgets/home/search_from_text.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
-  
+  const HomeScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -27,34 +27,29 @@ class HomeScreen extends StatelessWidget {
                 ),
               ),
               child: Padding(
-                padding: const EdgeInsets.only(
-                  left: 20,
-                  right: 20,
-                ),
+                padding: const EdgeInsets.only(left: 20, right: 20),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: const [
+                  children: [
                     TextUtils(
-                      text: 'Find your',
                       fontSize: 25,
-                      fontWeight: FontWeight.normal,
+                      fontWeight: FontWeight.bold,
+                      text: "Find Your",
                       color: Colors.white,
                       underLine: TextDecoration.none,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 5,
                     ),
                     TextUtils(
-                      text: 'INSPIRATION',
                       fontSize: 28,
                       fontWeight: FontWeight.bold,
+                      text: "INSPIRATION",
                       color: Colors.white,
                       underLine: TextDecoration.none,
                     ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    SearchFromText(),
+                    const SizedBox(height: 20),
+                    SearchFormText(),
                   ],
                 ),
               ),
@@ -67,9 +62,9 @@ class HomeScreen extends StatelessWidget {
               child: Align(
                 alignment: Alignment.topLeft,
                 child: TextUtils(
-                  text: 'Categories',
                   fontSize: 20,
                   fontWeight: FontWeight.w500,
+                  text: "Categories",
                   color: Get.isDarkMode ? Colors.white : Colors.black,
                   underLine: TextDecoration.none,
                 ),
